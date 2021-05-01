@@ -1,0 +1,34 @@
+version: '3.5'
+
+services:
+  webserver:
+    build:
+      context: ./.docker/nginx-php
+    container_name: webserver
+    ports:
+      - 80:80
+    volumes:
+      - ./storage/logs/nginx/:/var/log/nginx
+      - ./.docker/nginx-php/config/vending-machine.conf:/etc/nginx/sites-enabled/vending-machine.conf
+      - ./:/var/www
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+      - ./storage/data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=$DB_DATABASE
+      - MYSQL_USER=$DB_USERNAME
+      - MYSQL_PASSWORD=$DB_PASSWORD
+      - MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD
+    ports:
+      - 3306:3306
+
+  cli:
+    container_name: cli
+    build:
+      context: ./.docker/cli
+    volumes:
+      - ./:/var/www
+    tty: true
