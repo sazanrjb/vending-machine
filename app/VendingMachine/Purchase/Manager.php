@@ -4,8 +4,8 @@ namespace App\VendingMachine\Purchase;
 
 use App\VendingMachine\Core\Exceptions\ResourceNotFoundException;
 use App\VendingMachine\Machine\DTOs\PurchaseProductDTO;
-use App\VendingMachine\Product\Models\Product;
 use App\VendingMachine\Purchase\Models\Purchase;
+use Illuminate\Support\Facades\Lang;
 
 class Manager
 {
@@ -24,8 +24,8 @@ class Manager
         $purchaseInfo = $this->purchase->newQuery()->find($purchaseId);
 
         throw_if(!$purchaseInfo, new ResourceNotFoundException(
-            trans('not_found', [
-                'Entity' => 'purchase information'
+            Lang::get('not_found', [
+                'Entity' => 'Purchase information'
             ])
         ));
 
