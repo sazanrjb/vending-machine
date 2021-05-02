@@ -43,16 +43,14 @@ class InitializeProductsSeeder extends Seeder
 
     public function run()
     {
-        $this->databaseManager->table('products')->truncate();
-
         collect(self::PRODUCTS)->each(function (array $product) {
-            $this->product->newInstance()
-                ->forceFill([
+            $this->product->newQuery()
+                ->where('name', $product['name'])
+                ->firstOrCreate(['name' => $product['name']], [
                     'name' => $product['name'],
                     'price' => $product['price'],
                     'total' => $product['total']
-                ])
-                ->save();
+                ]);
         });
     }
 }
