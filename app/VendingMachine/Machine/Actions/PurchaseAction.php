@@ -10,6 +10,13 @@ use Illuminate\Http\Response;
 
 class PurchaseAction
 {
+    /**
+     * @param PurchaseProductRequest $request
+     * @param MachineManager $machineManager
+     * @param ProductManager $productManager
+     * @return Response
+     * @throws \Throwable
+     */
     public function __invoke(PurchaseProductRequest $request, MachineManager $machineManager, ProductManager $productManager)
     {
         $product = $productManager->find($request->input('product_id'));
