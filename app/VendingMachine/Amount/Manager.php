@@ -43,4 +43,19 @@ class Manager
 
         return $amountModel;
     }
+
+    public function deductAmount(float $amount, int $amountType = AmountType::COIN)
+    {
+        $amountModel = $this->findByType($amountType);
+
+        throw_if(!$amountModel, new AmountNotFoundException(
+            trans('general.not_found', [
+                'Entity' => 'amount'
+            ])
+        ));
+
+        $amountModel->forceFill([
+            'amount' => $amountModel->amount - $amount,
+        ])->save();
+    }
 }

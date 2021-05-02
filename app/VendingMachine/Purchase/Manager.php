@@ -12,28 +12,30 @@ class Manager
     /**
      * @var Purchase
      */
-    private Purchase $purchaseInformation;
+    private Purchase $purchase;
 
-    public function __construct(Purchase $purchaseInformation)
+    public function __construct(Purchase $purchase)
     {
-        $this->purchaseInformation = $purchaseInformation;
+        $this->purchase = $purchase;
     }
 
-    public function find(int $purchaseInformationId): Purchase
+    public function find(int $purchaseId): Purchase
     {
-        $purchaseInfo = $this->purchaseInformation->find($purchaseInformationId);
+        $purchaseInfo = $this->purchase->newQuery()->find($purchaseId);
 
         throw_if(!$purchaseInfo, new ResourceNotFoundException(
             trans('not_found', [
                 'Entity' => 'purchase information'
             ])
         ));
+
+        return $purchaseInfo;
     }
 
     public function create(PurchaseProductDTO $purchaseProductDTO): Purchase
     {
         $product = $purchaseProductDTO->getProduct();
-        $purchaseInfo = $this->purchaseInformation->associateProduct($product)
+        $purchaseInfo = $this->purchase->associateProduct($product)
             ->forceFill([
                 'price' => $product->price,
                 'amount_paid' => $purchaseProductDTO->getAmount(),
@@ -45,10 +47,10 @@ class Manager
         return $purchaseInfo;
     }
 
-    public function delete(Purchase $purchaseInformation): Purchase
+    public function delete(Purchase $purchase): Purchase
     {
-        $purchaseInformation->delete();
+        $purchase->delete();
 
-        return $purchaseInformation;
+        return $purchase;
     }
 }

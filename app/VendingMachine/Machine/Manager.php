@@ -71,4 +71,21 @@ class Manager implements MachineInterface
 
         return $product;
     }
+
+    /**
+     * @param Purchase $purchase
+     * @return Product
+     * @throws \Throwable
+     */
+    public function refundProduct(Purchase $purchase): Product
+    {
+        $product = $purchase->product;
+        $this->databaseManager->transaction(function () use ($product, $purchase) {
+            $this->productManager->addCount($product);
+            $this->purchaseManager->delete($purchase);
+            $this->amountManager->deductAmount($product->price);
+        });
+
+        return $product;
+    }
 }
