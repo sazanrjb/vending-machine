@@ -14,6 +14,7 @@ use App\VendingMachine\Purchase\Models\Purchase;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Facades\Config;
 use App\VendingMachine\Amount\Manager as AmountManager;
+use Illuminate\Support\Facades\Lang;
 
 class Manager implements MachineInterface
 {
@@ -54,13 +55,16 @@ class Manager implements MachineInterface
     public function purchaseProduct(PurchaseProductDTO $purchaseProductDTO): Product
     {
         $product = $purchaseProductDTO->getProduct();
-        throw_if($product->isOutOfStock(), new ProductOutOfStockException());
-        throw_if($product->price > $purchaseProductDTO->getAmount(), new InSufficientAmountException());
+        throw_if($product->isOutOfStock(), new ProductOutOfStockException(Lang::get('general.out_of_stock')));
+        throw_if(
+            $product->price > $purchaseProductDTO->getAmount(),
+            new InSufficientAmountException(Lang::get('general.insufficient_amount'))
+        );
 
         $amountModel = $this->amountManager->findByType(AmountType::COIN);
         throw_if(
             $amountModel->amount + $purchaseProductDTO->getAmount() > Config::get('vending_machine.max_amount'),
-            new MaxAmountExceededException()
+            new MaxAmountExceededException(Lang::get('general.max_amount_exceeded'))
         );
 
         $this->databaseManager->transaction(function () use ($purchaseProductDTO, $product) {
