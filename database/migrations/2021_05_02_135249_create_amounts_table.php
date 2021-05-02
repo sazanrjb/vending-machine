@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\VendingMachine\Core\ValueObjects\AmountType;
 
-class CreateProductsTable extends Migration
+class CreateAmountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +14,12 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('amounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('price', 5, 2);
-            $table->integer('total');
+            $table->decimal('amount', 5, 2);
+            $table->integer('type')
+                ->comment('coin, cash, etc.')
+                ->default(AmountType::COIN);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('amounts');
     }
 }
