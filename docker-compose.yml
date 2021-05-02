@@ -11,6 +11,8 @@ services:
       - ./storage/logs/nginx/:/var/log/nginx
       - ./.docker/nginx-php/config/vending-machine.conf:/etc/nginx/sites-enabled/vending-machine.conf
       - ./:/var/www
+    links:
+      - mysql
 
   mysql:
     image: mysql:5.7
@@ -32,3 +34,5 @@ services:
     volumes:
       - ./:/var/www
     tty: true
+    links:
+      - mysql
