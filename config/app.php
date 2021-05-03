@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         \App\VendingMachine\Machine\MachineServiceProvider::class,
         \App\VendingMachine\Product\ProductServiceProvider::class,
+        \App\VendingMachine\Purchase\PurchaseServiceProvider::class,
 
 
 
