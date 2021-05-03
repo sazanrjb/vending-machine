@@ -11,7 +11,7 @@ class Routes
     /**
      * @var Router
      */
-    private Router $router;
+    private $router;
 
     public function __construct(Router $router)
     {
