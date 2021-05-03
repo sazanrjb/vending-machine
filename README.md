@@ -27,6 +27,7 @@ To setup the application follow the below instructions:
 * Go into the cli container: `docker-compose exec cli bash`
 * Run migration: `php artisan migrate`
 * Seed initial data: `php artisan db:seed`
+* Run `npm i`  
 * Access `http://vending-machine.local/` on browser
 
 ## Structure
@@ -36,6 +37,10 @@ To setup the application follow the below instructions:
 * Eloquent models are inside Models folder
 * Business logics reside in Manager file
 * Other folders are used in the same manner for readability
+
+## Frontend
+* Vue.js is used in the frontend
+* Ant Design framework is used for the UI components
 
 ## Tests
 `PHPUnit` is used to write unit test. It is used in CI (Github actions) to automatically test after the push the branch.
