@@ -1,62 +1,47 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Vending Machine
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Vending Machine is an application for simulating the actual vending machine. It consists of 3 products currently, namely Coke, Pepsi and Dew. One can simply purchase the product by inserting coin with specified amount.
+The product can also be refunded. The purchase information can be seen in the list as well with the total coins in the machine and utilized coins.
 
-## About Laravel
+## Framework
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The application is written in PHP, on the [Laravel](http://laravel.com) framework. The current version used for this project is 8.12.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Install
+To use the application, follow the instructions below:
+* `git clone git@github.com:sazanrjb/vending-machine.git`
+* cd vending-machine
+* Add `127.0.0.1 vending-machine.local` to your `/etc/hosts` file
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Docker Usage
+* Make sure you have docker and docker-compose installed on you machine
+* cd in: `cd vending-machine`
+* Build/run it: `docker-compose up -d`
+* Edit `.env` file for database credentials
 
-## Learning Laravel
+## Set up project
+To setup the application follow the below instructions:
+* `cd vending-machine`
+* `composer install`
+* Give read/write permissions to `storage` and `bootstrap/cache` folders
+* Go into the cli container: `docker-compose exec cli bash`
+* Run migration: `php artisan migrate`
+* Seed initial data: `php artisan db:seed`
+* Access `http://vending-machine.local/` on browser
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Structure
+* The application's structure is quite simple. The reside inside `VendingMachine` folder inside app folder
+* Each modules reside in their own folder  
+* Actions are used for the controllers inside Actions folder
+* Eloquent models are inside Models folder
+* Business logics reside in Manager file
+* Other folders are used in the same manner for readability
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tests
+`PHPUnit` is used to write unit test. It is used in CI (Github actions) to automatically test after the push the branch.
 
-## Laravel Sponsors
+To run unit test, go to the cli container, `docker-compose exec cli bash` and run:
+```
+./vendor/bin/phpunit
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
