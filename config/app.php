@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         \App\VendingMachine\Machine\MachineServiceProvider::class,
-
+        \App\VendingMachine\Product\ProductServiceProvider::class,
 
 
 

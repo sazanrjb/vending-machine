@@ -5,6 +5,7 @@ namespace App\VendingMachine\Product;
 use App\VendingMachine\Core\Exceptions\ResourceNotFoundException;
 use App\VendingMachine\Product\Exceptions\ProductOutOfStockException;
 use App\VendingMachine\Product\Models\Product;
+use Illuminate\Support\Facades\Lang;
 
 class Manager
 {
@@ -24,8 +25,8 @@ class Manager
         $product = $this->product->newQuery()->find($productId);
 
         throw_if(!$product, new ResourceNotFoundException(
-            trans('general.not_found', [
-                'Entity' => 'product'
+            Lang::get('general.not_found', [
+                'Entity' => 'Product'
             ])
         ));
 
