@@ -20,9 +20,6 @@ class ListProducts
     public function fetch(): Collection
     {
         return $this->product->newQuery()
-            ->with(['purchases' => function ($query) {
-                $query->select('id', 'product_id', 'price', 'amount_paid', 'amount_returned', 'created_at');
-            }])
             ->select(
                 'products.id',
                 'products.name',
